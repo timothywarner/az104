@@ -1,5 +1,5 @@
 
-# Exam AZ-103/104: Microsoft Azure Administrator Crash Course
+# Exam AZ-104: Microsoft Azure Administrator Crash Course
 
 ### Instructor contact
 
@@ -9,4 +9,4 @@ Tim Warner
 * [Pluralsight author page](https://www.pluralsight.com/authors/tim-warner)
 * [Personal website](https://techtrainertim.com/)
 
-![AZ-103-cover-image](./cover.png)
+![AZ-104-cover-image](./cover.png)
