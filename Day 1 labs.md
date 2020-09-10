@@ -14,6 +14,7 @@
     * Taxonomic Tags
       * Azure Policy
     * Locks
+      * Blueprints
 
 * Storage
     * Storage accounts
