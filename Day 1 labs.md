@@ -34,6 +34,8 @@
       * High availability
       * Scale Sets
       * ARM template
+        * Key Vault reference: https://timw.info/479fb
+        * Custom Script Extension: https://timw.info/69758
     * VM Configuration
       * Azure Disk Encryption
       * VHD image template
@@ -43,3 +45,4 @@
       * AKS
     * Web Apps
       * App Service Plans
+      * Key Vault reference: https://timw.info/cfa82

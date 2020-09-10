@@ -24,14 +24,14 @@
         * S2S VPN
         * ExpressRoute
 
+* Backup and Recovery
+    * VM backup / policy
+      * Soft delete
+    * Azure Site Recovery
+
 * Monitoring
     * Azure Monitor
       * Metrics / workbooks
       * Alerts
       * Log Analytics / log search
       * Application Insights
-
-* Backup and Recovery
-    * VM backup / policy
-      * Soft delete
-    * Azure Site Recovery
