@@ -1,11 +1,8 @@
 # AZ-104 Crash Course Day 2 Labs
 
 * Content Catch-Up
-    * Bastion
-    * Firewall
-      * UDR
+    * ADE
     * Locks
-    * Azure AD Join
 
 * Networking
     * VNet implementation
@@ -19,7 +16,6 @@
         * Application Gateway
       * Troubleshooting
         * Network Watcher
-        * Network Performance Monitor
       * Hybrid cloud
         * S2S VPN
         * ExpressRoute

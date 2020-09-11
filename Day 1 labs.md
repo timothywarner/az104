@@ -40,7 +40,6 @@
     * VM Configuration
       * Azure Disk Encryption
       * VHD image template
-      * Custom Script Extension
     * Containers
       * ACI
       * AKS
