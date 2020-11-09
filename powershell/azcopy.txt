@@ -2,6 +2,10 @@
 
 # Ref: https://timw.info/d0a73
 
+# Get help
+azcopy help
+azcopy copy --help
+
 # Sign in (you can also use SAS tokens and managed identities)
 azcopy login --tenant-id=<tenant-id>
 
