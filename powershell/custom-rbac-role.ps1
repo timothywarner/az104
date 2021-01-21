@@ -1,6 +1,12 @@
 # Ref: https://docs.microsoft.com/en-us/azure/role-based-access-control/tutorial-custom-role-powershell
 
-Get-AzProviderOperation 'Microsoft.Support/*' | Format-Table -Property Operation, Description -AutoSize
+Get-AzRoleDefinition -Name 'Storage Account Contributor' | ConvertTo-Json | Out-File ./stgcontrib.json
+
+Get-AzRoleDefinition -Name 'Storage Blob Data Contributor' | ConvertTo-Json | Out-File ./blobcontrib.json
+
+Get-AzProviderOperation 'Microsoft.Compute/*' | Format-Table -Property Operation, Description -AutoSize
+
+Get-AzProviderOperation 'Microsoft.Storage/*' | Format-Table -Property Operation, Description -AutoSize
 
 Get-AzRoleDefinition -Name 'Reader' | ConvertTo-Json | Out-File 'D:\ReaderSupportRole.json'
 
