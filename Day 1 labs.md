@@ -46,3 +46,36 @@
     * Web Apps
       * App Service Plans
       * Key Vault reference: https://timw.info/cfa82
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
