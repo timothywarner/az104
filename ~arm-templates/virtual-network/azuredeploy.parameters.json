@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "value": "oreilly-vnet"
+        },
+        "vnetAddressPrefix": {
+            "value": "10.10.0.0/16"
+        },
+        "subnet1Prefix": {
+            "value": "10.10.1.0/24"
+        },
+        "subnet1Name": {
+            "value": "web"
+        },
+        "subnet2Prefix": {
+            "value": "10.10.2.0/24"
+        },
+        "subnet2Name": {
+            "value": "workload"
+        },
+        "subnet3Prefix": {
+            "value": "10.10.3.0/24"
+        },
+        "subnet3Name": {
+            "value": "AzureBastionSubnet"
+        },
+        "subnet4Prefix": {
+            "value": "10.10.4.0/24"
+        },
+        "subnet4Name": {
+            "value": "AzureFirewallSubnet"
+        },
+        "subnet5Prefix": {
+            "value": "10.10.5.0/24"
+        },
+        "subnet5Name": {
+            "value": "ApplicationGatewaySubnet"
+        },
+        "subnet6Prefix": {
+            "value": "10.10.6.0/24"
+        },
+        "subnet6Name": {
+            "value": "GatewaySubnet"
+        }
+    }
+}

@@ -1,0 +1,174 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vNetName": {
+            "type": "string",
+            "defaultValue": "test-vnet",
+            "metadata": {
+                "description": "Target virtual network name"
+            }
+        },
+        "firewallName": {
+            "type": "string",
+            "defaultValue": "tlwfw001",
+            "metadata": {
+                "description": "Azure Firewall hostname"
+            }
+        },
+        "publicIPName": {
+            "type": "string",
+            "defaultValue": "tfwpip001",
+            "metadata": {
+                "description": "Hostname of public IP address resource"
+            }
+        },
+        "vNetResourceGroup": {
+            "type": "string",
+            "defaultValue": "test",
+            "metadata": {
+                "description": "Resource group of the parent virtual network"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('firewallName')]",
+            "type": "Microsoft.Network/azureFirewalls",
+            "apiVersion": "2019-11-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+            },
+            "properties": {
+                "applicationRuleCollections": [
+                    {
+                        "name": "appCollectionName1",
+                        "properties": {
+                            "priority": 100,
+                            "action": {
+                                "type": "Allow"
+                            },
+                            "rules": [
+                                {
+                                    "name": "appRuleName1",
+                                    "description": "appRuleDescription",
+                                    "sourceAddresses": [
+                                        "10.0.0.4"
+                                    ],
+                                    "protocols": [
+                                        {
+                                            "protocolType": "Http",
+                                            "port": 80
+                                        }
+                                    ],
+                                    "targetFqdns": [
+                                        "www.microsoft.com"
+                                    ],
+                                    "fqdnTags": [
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "natRuleCollections": [
+                    {
+                        "name": "natCollectionName1",
+                        "properties": {
+                            "priority": 100,
+                            "action": {
+                                "type": "Dnat"
+                            },
+                            "rules": [
+                                {
+                                    "name": "natRuleName1",
+                                    "description": "natRuleDescription",
+                                    "sourceAddresses": [
+                                        "10.0.0.4"
+                                    ],
+                                    "destinationAddresses": [
+                                        "[reference(resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPName'))).ipAddress]"
+                                    ],
+                                    "destinationPorts": [
+                                        "3389"
+                                    ],
+                                    "protocols": [
+                                        "TCP"
+                                    ],
+                                    "translatedAddress": "10.0.0.254",
+                                    "translatedPort": "2500"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "networkRuleCollections": [
+                    {
+                        "name": "networkCollectionName",
+                        "properties": {
+                            "priority": 100,
+                            "action": {
+                                "type": "Deny"
+                            },
+                            "rules": [
+                                {
+                                    "name": "networkRuleName",
+                                    "description": "networkRuleDescription",
+                                    "sourceAddresses": [
+                                        "10.0.0.4"
+                                    ],
+                                    "destinationAddresses": [
+                                        "10.0.1.4"
+                                    ],
+                                    "destinationPorts": [
+                                        "1"
+                                    ],
+                                    "protocols": [
+                                        "TCP"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "ipConfigurations": [
+                    {
+                        "name": "ipConfigName",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId(parameters('vNetResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', parameters('vNetName'), 'AzureFirewallSubnet')]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPName'))]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPName'))]"
+            ]
+        },
+        {
+            "name": "[parameters('publicIPName')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2019-11-01",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "standard"
+            },
+            "tags": {
+                "owner": "tim@timw.info"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "dnsSettings": {
+                    "domainNameLabel": "[concat('twfw001', uniqueString(resourceGroup().id))]"
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
