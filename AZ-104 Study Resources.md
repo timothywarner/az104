@@ -1,17 +1,17 @@
 # Tim's AZ-104 Study Resources
 
-## Conceptual knowledge
+## Conceptual Knowledge
 
 * [Azure Documentation](https://docs.microsoft.com/en-us/azure/)
 * [Azure AD feature comparison](https://azure.microsoft.com/en-us/pricing/details/active-directory/)
 * [Azure Architecture Center](https://docs.microsoft.com/en-us/azure/architecture/)
 * [Azure Quickstart Templates](https://azure.microsoft.com/en-us/resources/templates/)
 * [Azure SDKs and Tools](https://azure.microsoft.com/en-us/downloads/)
+* [Tim's YouTube ARM Templates Tutorial](https://timwinfo-my.sharepoint.com/:x:/g/personal/tim_timw_info/EQRooL1BhnRMjaIx6WEovRYBDXbzHOI1CrtpNls3zesDHw?rtime=TS46Lu0W2Ug)
 
-## Practical application
+## Practical Application
 
 * [Azure free account](https://azure.microsoft.com/en-us/free/)
-* [Visual Studio 2019 Community Edition](https://visualstudio.microsoft.com/vs/community/)
 * [Microsoft Learn Azure Administrator Path](https://docs.microsoft.com/en-us/learn/browse/?roles=administrator)
 * [Azure Citadel](https://azurecitadel.com/)
 * [AZ-104 Microsoft Official Curriculum labs](https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator)
@@ -24,6 +24,7 @@
 
 * [Whizlabs](https://www.whizlabs.com/microsoft-azure-certification-az-104/)
 * [MeasureUp](https://www.measureup.com/az-104-microsoft-azure-administrator.html)
+* [Tim's YouTube Comparison Video](https://www.youtube.com/watch?v=_aH4DbpcJWA&t=2s)
 
 ## Exam Discounts and Registration Info
 
@@ -34,4 +35,4 @@
 * [Pearson VUE Grievances](https://home.pearsonvue.com/microsoft/contact)
 * [Take MS Cert Exams Online](https://build5nines.com/take-microsoft-certification-exams-during-covid-19-coronavirus-quarantine/)
 * [Tim's Microsoft Online Testing video](https://www.youtube.com/watch?v=myf6r5nulj0)
-
+* [Microsoft Learn blog](https://techcommunity.microsoft.com/t5/microsoft-learn-blog/bg-p/MicrosoftLearnBlog)
