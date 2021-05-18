@@ -36,3 +36,5 @@
 * [Take MS Cert Exams Online](https://build5nines.com/take-microsoft-certification-exams-during-covid-19-coronavirus-quarantine/)
 * [Tim's Microsoft Online Testing video](https://www.youtube.com/watch?v=myf6r5nulj0)
 * [Microsoft Learn blog](https://techcommunity.microsoft.com/t5/microsoft-learn-blog/bg-p/MicrosoftLearnBlog)
+* Exam recertification info
+* [Announcement concerning new cert validity period](https://techcommunity.microsoft.com/t5/microsoft-learn-blog/reminder-role-based-and-specialty-certifications-to-be-valid-for/ba-p/2150406)
