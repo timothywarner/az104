@@ -5,6 +5,9 @@ az login
 az account list
 az account set --subscription ''
 
+# deploy template
+az group deployment create --resource-group <my-resource-group> --template-uri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/application-workloads/docker/docker-simple-on-ubuntu/azuredeploy.json
+
 # get regions
 az account list-locations \
   --query "[].{Region:name}" \
