@@ -47,19 +47,26 @@
 
 ## About
 
-> **[?]**
-> Provide general information about your project here.
-> What problem does it (intend to) solve?
-> What is the purpose of your project?
-> Why did you undertake it?
-> You don't have to answer all the questions - just the ones relevant to your project.
-
-
+This is a six-hour instructor-led course that covers the [Exam AZ-104, Microsoft Azure Administrator](https://docs.microsoft.com/en-us/learn/certifications/exams/az-104) certification exam objectives.
 
 ### Built With
 
-> **[?]**
-> Please provide the technologies that are used in the project.
+- Microsoft Azure
+- Visual Studio Code
+  - PowerShell extension
+  - ARM Tools extension
+  - Azure CLI Tools extension
+  - Azure Bicep extension
+  - Azure Account extension
+- Azure PowerShell
+- Azure CLI
+- Azure Bicep
+- Azure Storage Explorer
+- SQL Server Management Studio
+- Microsoft PowerPoint
+- Microsoft Visio
+- Techsmith Snagit
+- Lucidchart
 
 ## Roadmap
 

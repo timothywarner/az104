@@ -10,6 +10,7 @@
 * [Tim's YouTube ARM Templates Tutorial](https://timwinfo-my.sharepoint.com/:x:/g/personal/tim_timw_info/EQRooL1BhnRMjaIx6WEovRYBDXbzHOI1CrtpNls3zesDHw?rtime=TS46Lu0W2Ug)
 * [Sam Cogan ARM tutorial](https://www.youtube.com/watch?v=9EpBiud48Ao&t=1s)
 * [Adam Marczak ARM tutorials](https://www.youtube.com/watch?v=Ge_Sp-1lWZ4&t=916s)
+* [Azure Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview)
 
 ## Practical Application
 
@@ -22,12 +23,15 @@
 * [A Cloud Guru](https://acloud.guru/learn/160303d7-6947-4fbc-9d19-fa304849f92e)
 * [Pluralsight](https://www.pluralsight.com/paths/microsoft-azure-administrator-az-104)
 * [How Azure Pass works](https://www.youtube.com/watch?v=Et1hyghPjeA)
+* [Azure Bicep Playground](https://bicepdemo.z22.web.core.windows.net/)
+* [Azure Log Analytics Playground](https://portal.azure.com/#blade/Microsoft_Azure_Monitoring_Logs/DemoLogsBlade)
 
 ## Practice Exams
 
 * [Whizlabs](https://www.whizlabs.com/microsoft-azure-certification-az-104/)
 * [MeasureUp](https://www.measureup.com/az-104-microsoft-azure-administrator.html)
 * [Tim's YouTube Comparison Video](https://www.youtube.com/watch?v=_aH4DbpcJWA&t=2s)
+* [Tutorials Dojo](https://portal.tutorialsdojo.com/courses/az-104-microsoft-azure-administrator-practice-exams/)
 
 ## Exam Discounts and Registration Info
 
@@ -40,4 +44,3 @@
 * [ Tim's exam registration helper video](https://www.youtube.com/watch?v=FOFWbSYbbVI)
 * [Microsoft Learn blog](https://techcommunity.microsoft.com/t5/microsoft-learn-blog/bg-p/MicrosoftLearnBlog)
 * [Certification Dashboard](https://aka.ms/certdashboard)
-* [Announcement concerning new cert validity period](https://techcommunity.microsoft.com/t5/microsoft-learn-blog/reminder-role-based-and-specialty-certifications-to-be-valid-for/ba-p/2150406)
