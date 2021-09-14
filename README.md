@@ -1,7 +1,7 @@
 <h1 align="center">
   <a href="https://github.com/timothywarner/az104">
     <!-- Please provide path to your logo here -->
-    <img src="docs/images/logo.svg" alt="Logo" width="100" height="100">
+    <img src="docs/images/cover.png" alt="Logo" width="300" />
   </a>
 </h1>
 
@@ -32,10 +32,6 @@
 
 - [About](#about)
   - [Built With](#built-with)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Support](#support)
 - [Project assistance](#project-assistance)
@@ -65,24 +61,6 @@
 > **[?]**
 > Please provide the technologies that are used in the project.
 
-## Getting Started
-
-### Prerequisites
-
-> **[?]**
-> What are the project requirements/dependencies?
-
-### Installation
-
-> **[?]**
-> Proceed to describe how to install and get started with the project.
-
-## Usage
-
-> **[?]**
-> How does one go about using it?
-> Provide various use cases and code examples here.
-
 ## Roadmap
 
 See the [open issues](https://github.com/timothywarner/az104/issues) for a list of proposed features (and known issues).
@@ -93,13 +71,13 @@ See the [open issues](https://github.com/timothywarner/az104/issues) for a list 
 
 ## Support
 
-> **[?]**
-> Provide additional ways to contact the project maintainer/maintainers.
-
 Reach out to the maintainer at one of the following places:
 
 - [GitHub discussions](https://github.com/timothywarner/az104/discussions)
 - The email which is located [in GitHub profile](https://github.com/timothywarner)
+- [Twitter](http://twitter.com/techtrainertim)
+- [LinkedIn](https://www.linkedin.com/in/timothywarner)
+- [Website](https://techtrainertim.com/)
 
 ## Project assistance
 
@@ -123,7 +101,7 @@ Thank you for being involved!
 
 The original setup of this repository is by [Tim Warner](https://github.com/timothywarner).
 
-For a full list of all authors and contributors, check [the contributor's page](https://github.com/timothywarner/az104/contributors).
+For a full list of all authors and contributors, check [the contributors page](https://github.com/timothywarner/az104/contributors).
 
 ## Security
 
@@ -140,6 +118,4 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-> **[?]**
-> If your work was funded by any organization or institution, acknowledge their support here.
-> In addition, if your work relies on other software libraries, or was inspired by looking at other work, it is appropriate to acknowledge this intellectual debt too.
+Thanks to Laura Lewin, Mike Pfeiffer, Microsoft, and to each and every one of my students around the world.
