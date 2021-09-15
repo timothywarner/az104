@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "value": "mallory-vm"
+        },
+        "adminUsername": {
+            "value": "tim"
+        },
+        "adminPassword": {
+            "value": "your_password"
+        },
+        "subnetId": {
+            "value": "/subscriptions/2fbf906e-1101-4bc0-b64f-adc44e462fff/resourceGroups/oreilly/providers/Microsoft.Network/virtualNetworks/oreilly-hub-vnet/subnets/workload"
+        }
+    }
+}

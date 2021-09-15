@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "value": "tim"
+        },
+        "dnsLabelPrefix": {
+            "value": "oreilly-lin-pip1"
+        },
+        "adminPasswordOrKey": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/2fbf906e-1101-4bc0-b64f-adc44e462fff/resourceGroups/TIM/providers/Microsoft.KeyVault/vaults/tim-keyvault-001"
+                },
+                "secretName": "timvmpw"
+            }
+        }
+    }
+}
