@@ -3,17 +3,22 @@
 * Content Catch-Up
   * S2S VPN
   * ExpressRoute
+  * VM backup
+    * Vaults
 
 * Storage
   * Authentication
   * Files
   * Replication
   * Lifecycle
+  * Service Endpoints
 
 * Identities and governance
   * Users and groups
   * SSPR / MFA
   * RBAC
+    * Custom role
+  * Policy / tagging
 
 * Monitoring
   * Diagnostics
@@ -23,3 +28,29 @@
   * Hands-on
   * Item types
   * Online testing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

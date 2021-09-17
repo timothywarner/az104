@@ -11,6 +11,7 @@
 * [Sam Cogan ARM tutorial](https://www.youtube.com/watch?v=9EpBiud48Ao&t=1s)
 * [Adam Marczak ARM tutorials](https://www.youtube.com/watch?v=Ge_Sp-1lWZ4&t=916s)
 * [Azure Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview)
+* [AZ-104 Class Topology](https://lucid.app/lucidchart/5b4214cf-b00b-400d-80ff-c15572f57904/view?page=0_0#)
 
 ## Your Toolkit
 
