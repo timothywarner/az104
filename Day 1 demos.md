@@ -1,6 +1,8 @@
 # AZ-104 Crash Course Day 1 Labs
 
 * Deploy and manage Azure compute
+  * DES
+  * Custom VHDs
   * Extensions
   * ADE
   * Diagnostics
@@ -24,3 +26,34 @@
     * Virtual WAN
   * Integration
     * App Service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
