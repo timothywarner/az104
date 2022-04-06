@@ -8,7 +8,6 @@
   * Diagnostics
   * Backup
 
-
 * Configure virtual networking
   * VNet / Bicep
   * Peering

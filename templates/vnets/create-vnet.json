@@ -9,11 +9,11 @@
     }
   },
   "parameters": {
-    "vnetName": {
+    "vnetNamePrefix": {
       "type": "string",
-      "defaultValue": "hub-vnet",
+      "defaultValue": "hub",
       "metadata": {
-        "description": "VNet name"
+        "description": "VNet name prefix"
       }
     },
     "vnetAddressPrefix": {
@@ -132,16 +132,18 @@
       "type": "string",
       "defaultValue": "10.60.8.0/24",
       "metadata": {
-        "description": "Route serversubnet prefix"
+        "description": "Route server subnet prefix"
       }
     }
   },
-  "functions": [],
+  "variables": {
+    "vNetName": "[concat(parameters('vnetNamePrefix'), '-vnet')]"
+  },
   "resources": [
     {
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2019-11-01",
-      "name": "[parameters('vnetName')]",
+      "name": "[variables('vNetName')]",
       "location": "[resourceGroup().location]",
       "properties": {
         "addressSpace": {
@@ -201,5 +203,19 @@
         ]
       }
     }
-  ]
+  ],
+  "outputs": {
+    "vNet": {
+      "type": "object",
+      "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vNetName')))]"
+    },
+    "vNetAddresses": {
+      "type": "array",
+      "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vNetName'))).addressSpace.addressPrefixes]"
+    },
+    "vNetAddressSpace": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vNetName'))).addressSpace.addressPrefixes[0]]"
+    }
+  }
 }
