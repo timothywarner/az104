@@ -7,7 +7,6 @@
 * [Azure Architecture Center](https://docs.microsoft.com/en-us/azure/architecture/)
 * [Azure Quickstart Templates](https://azure.microsoft.com/en-us/resources/templates/)
 * [Azure SDKs and Tools](https://azure.microsoft.com/en-us/downloads/)
-* [Tim's YouTube ARM Templates Tutorial](https://timwinfo-my.sharepoint.com/:x:/g/personal/tim_timw_info/EQRooL1BhnRMjaIx6WEovRYBDXbzHOI1CrtpNls3zesDHw?rtime=TS46Lu0W2Ug)
 * [Sam Cogan ARM tutorial](https://www.youtube.com/watch?v=9EpBiud48Ao&t=1s)
 * [Adam Marczak ARM tutorials](https://www.youtube.com/watch?v=Ge_Sp-1lWZ4&t=916s)
 * [Azure Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview)
