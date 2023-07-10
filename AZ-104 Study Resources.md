@@ -44,6 +44,7 @@
 
 ## Practice Exams
 
+* [Microsoft free practice assessments](https://learn.microsoft.com/en-us/certifications/practice-assessments-for-microsoft-certifications)
 * [Whizlabs](https://www.whizlabs.com/microsoft-azure-certification-az-104/)
 * [MeasureUp](https://www.measureup.com/az-104-microsoft-azure-administrator.html)
 * [Tim's YouTube Comparison Video](https://www.youtube.com/watch?v=_aH4DbpcJWA&t=2s)
