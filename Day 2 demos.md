@@ -1,56 +1,43 @@
 # AZ-104 Crash Course Day 2 Labs
 
-* Content Catch-Up
-  * S2S VPN
-  * ExpressRoute
-  * VM backup
-    * Vaults
+## Manage Azure identities and governance (20–25%)
 
-* Storage
-  * Authentication
-  * Files
-  * Replication
-  * Lifecycle
-  * Service Endpoints
+### Azure AD authentication
 
-* Identities and governance
-  * Users and groups
-  * SSPR / MFA
-  * RBAC
-    * Custom role
-  * Policy / tagging
+- Users, groups, guests
+- AUs
+- SSPR
 
-* Monitoring
-  * Diagnostics
-  * Alerts
+### ARM and AzureAD authorization
 
-* Certification
-  * Hands-on
-  * Item types
-  * Online testing
+- Built-in roles
+- interpret access assignments
 
+### Governance
 
+- Azure Policy
+- Resource locks
 
+## Implement and manage storage (15–20%)
 
+### Storage accounts
 
+- Replication
+- SSE Encryption
+- Blob snapshots, access tiers and lifecycle management
+- RBAC
 
+## Monitor and maintain Azure resources (10–15%)
 
+### Azure Monitor
 
+- Metrics
+- Alerts
+- Log Analytics
+- Network Watcher & Connection Monitor
 
+### Backup
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Vaults
+- ASR
 
