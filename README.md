@@ -1,5 +1,14 @@
 # Tim's AZ-104 Study Resources
 
+## Contact information
+
+- [Tim Warner](mailto:timothywarner316@gmail.com)
+- [Website](https://techtrainertim.com)
+- [Azure OpenAI Training Blog](https://azureopenai.blog)
+- [Bluesky](https://bsky.app/profile/techtrainertim.bsky.social)
+- [Mastodon](https://mastodon.social/@techtrainertim)
+- [LinkedIn](https://www.linkedin.com/in/timothywarner/)
+
 ## Conceptual Knowledge
 
 * [Azure Documentation](https://docs.microsoft.com/en-us/azure/)
@@ -31,13 +40,10 @@
 ## Practical Application
 
 * [Azure free account](https://azure.microsoft.com/en-us/free/)
-* [Microsoft Learn Azure Administrator Path](https://docs.microsoft.com/en-us/learn/browse/?roles=administrator)
+* [Microsoft Learn Azure Administrator path](https://docs.microsoft.com/en-us/learn/browse/?roles=administrator)
 * [Azure Citadel](https://azurecitadel.com/)
 * [AZ-104 Microsoft Official Curriculum labs](https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator)
-* [More AZ-104 labs from MS Learning](https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/)
-* [Cloud Academy](https://cloudacademy.com/learning-paths/az-104-exam-preparation-microsoft-azure-administrator-1-1332/)
-* [A Cloud Guru](https://acloud.guru/learn/160303d7-6947-4fbc-9d19-fa304849f92e)
-* [Pluralsight](https://www.pluralsight.com/paths/microsoft-azure-administrator-az-104)
+* [More AZ-104 labs from MS Learn](https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/)
 * [How Azure Pass works](https://www.youtube.com/watch?v=Et1hyghPjeA)
 * [Azure Bicep Playground](https://bicepdemo.z22.web.core.windows.net/)
 * [Azure Log Analytics Playground](https://portal.azure.com/#blade/Microsoft_Azure_Monitoring_Logs/DemoLogsBlade)
