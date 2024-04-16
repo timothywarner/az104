@@ -1,0 +1,122 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "southcentralus",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {
+        "vnetName": "hub-vnet",
+        "vpnGatewayName": "twaz104vpn1",
+        "localNetworkGatewayName": "localNetworkGateway1",
+        "vpnGwPublicIPName1": "twaz104vpn1PublicIP1",
+        "vpnGwPublicIPName2": "twaz104vpn1PublicIP2",
+        "gatewaySubnetRef": "[resourceId('az104-rg', 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), 'GatewaySubnet')]",
+        "localVPNGatewayIP": "192.168.86.1",
+        "localLanAddressSpace": "192.168.86.0/24",
+        "bgpAsn": "65515",
+        "bgpPeerWeight": 0
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2021-02-01",
+            "name": "[variables('vpnGwPublicIPName1')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "sku": {
+                    "name": "Basic"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2021-02-01",
+            "name": "[variables('vpnGwPublicIPName2')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "sku": {
+                    "name": "Basic"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworkGateways",
+            "apiVersion": "2021-02-01",
+            "name": "[variables('vpnGatewayName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('vpnGwPublicIPName1'))]",
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('vpnGwPublicIPName2'))]"
+            ],
+            "properties": {
+                "sku": {
+                    "name": "VpnGw1",
+                    "tier": "VpnGw1"
+                },
+                "gatewayType": "Vpn",
+                "vpnType": "RouteBased",
+                "enableBgp": true,
+                "activeActive": true,
+                "ipConfigurations": [
+                    {
+                        "name": "vpnGwIpConfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[variables('gatewaySubnetRef')]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('vpnGwPublicIPName1'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "vpnGwIpConfig2",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[variables('gatewaySubnetRef')]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('vpnGwPublicIPName2'))]"
+                            }
+                        }
+                    }
+                ],
+                "bgpSettings": {
+                    "asn": "[variables('bgpAsn')]",
+                    "bgpPeeringAddress": null,
+                    "peerWeight": "[variables('bgpPeerWeight')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/localNetworkGateways",
+            "apiVersion": "2021-02-01",
+            "name": "[variables('localNetworkGatewayName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "localNetworkAddressSpace": {
+                    "addressPrefixes": [
+                        "[variables('localLanAddressSpace')]"
+                    ]
+                },
+                "gatewayIPAddress": "[variables('localVPNGatewayIP')]",
+                "bgpSettings": {
+                    "asn": "65520",
+                    "bgpPeeringAddress": "[variables('localVPNGatewayIP')]",
+                    "peerWeight": 0
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
