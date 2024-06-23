@@ -4,7 +4,6 @@
 
 - [Tim Warner](mailto:timothywarner316@gmail.com)
 - [Website](https://techtrainertim.com)
-- [Azure OpenAI Training Blog](https://azureopenai.blog)
 - [Bluesky](https://bsky.app/profile/techtrainertim.bsky.social)
 - [Mastodon](https://mastodon.social/@techtrainertim)
 - [LinkedIn](https://www.linkedin.com/in/timothywarner/)
