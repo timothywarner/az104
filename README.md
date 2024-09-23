@@ -1,12 +1,25 @@
-# Tim's AZ-104 Study Resources
+# Tim Warner's AZ-104 Study Resources
 
 ## Contact information
 
 - [Tim Warner](mailto:timothywarner316@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/timothywarner/)
+- [YouTube](https://www.youtube.com/channel/UCim7PFtynyPuzMHtbNyYOXA)
 - [Website](https://techtrainertim.com)
 - [Bluesky](https://bsky.app/profile/techtrainertim.bsky.social)
 - [Mastodon](https://mastodon.social/@techtrainertim)
-- [LinkedIn](https://www.linkedin.com/in/timothywarner/)
+
+## "The Good Stuff": Most important AZ-104 resources
+
+- [AZ-104 exam page](https://learn.microsoft.com/en-us/certifications/exams/az-104)
+- [AZ-104 skills measured](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104)
+- [Microsoft/Pearson VUE AZ-104 exam registration page](https://learn.microsoft.com/en-us/credentials/certifications/schedule-through-pearson-vue?examUid=exam.AZ-104&examUrl=https%3A%2F%2Flearn.microsoft.com%2Fcredentials%2Fcertifications)
+- [Pearson VUE Exam Replay + MeasureUp bundle](https://www.mindhub.com/microsoft-exam-replay-mcp-exam-plus-retake/p/Microsoft-Exam-Replay)
+- [MeasureUp AZ-104 practice exams](https://www.measureup.com/microsoft-practice-test-az-104-microsoft-azure-administrator.html?srsltid=AfmBOoq-qwcTckUql4cyqdhx-WxIWbn_qOYMhH-Z8ud5UOHN8bYWgWBc)
+- [Microsoft Learn AZ-104 learning path](https://learn.microsoft.com/en-us/training/courses/az-104t00/)
+- [Azure free account](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account)
+- [Pearson CertPREP AZ-104 training labs](https://govstore.pearsonvue.com/certprep-microsoft-exam-az-104/p/CLC-AZ104-PVUE)
+- [Pearson ITP AZ-104 Course Labs](https://www.pearsonitcertification.com/store/itp-course-lab-az-104-microsoft-azure-administrator-9780137312603)
 
 ## Conceptual Knowledge
 
