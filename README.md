@@ -24,7 +24,7 @@
 ## Conceptual Knowledge
 
 * [Azure Documentation](https://docs.microsoft.com/en-us/azure/)
-* [Azure AD feature comparison](https://azure.microsoft.com/en-us/pricing/details/active-directory/)
+* [Entra ID feature comparison](https://azure.microsoft.com/en-us/pricing/details/active-directory/)
 * [Azure Architecture Center](https://docs.microsoft.com/en-us/azure/architecture/)
 * [Azure Quickstart Templates](https://azure.microsoft.com/en-us/resources/templates/)
 * [Azure SDKs and Tools](https://azure.microsoft.com/en-us/downloads/)
