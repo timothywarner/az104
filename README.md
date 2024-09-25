@@ -13,6 +13,8 @@
 
 - [AZ-104 exam page](https://learn.microsoft.com/en-us/certifications/exams/az-104)
 - [AZ-104 skills measured](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104)
+- [Microsoft AZ-104 free assessment](https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/practice/assessment?assessment-type=practice&assessmentId=21&practice-assessment-type=certification)
+- [Microsoft certification exam sandbox experience](https://www.starttest.com/ITDVersions/22.0.0.0/ITDStart.aspx?SVC=62df289a-32af-4315-a61a-8b2c243086ee)
 - [Microsoft/Pearson VUE AZ-104 exam registration page](https://learn.microsoft.com/en-us/credentials/certifications/schedule-through-pearson-vue?examUid=exam.AZ-104&examUrl=https%3A%2F%2Flearn.microsoft.com%2Fcredentials%2Fcertifications)
 - [Pearson VUE Exam Replay + MeasureUp bundle](https://www.mindhub.com/microsoft-exam-replay-mcp-exam-plus-retake/p/Microsoft-Exam-Replay)
 - [MeasureUp AZ-104 practice exams](https://www.measureup.com/microsoft-practice-test-az-104-microsoft-azure-administrator.html?srsltid=AfmBOoq-qwcTckUql4cyqdhx-WxIWbn_qOYMhH-Z8ud5UOHN8bYWgWBc)
