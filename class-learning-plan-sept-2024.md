@@ -2,7 +2,7 @@
 
 Exam AZ-104: Microsoft Azure Administrator in 4 Hours
 
-Last Updated: February 2024
+Last Updated: September 2024
 
 ## Manage Azure identities and governance (20–25%)
 
