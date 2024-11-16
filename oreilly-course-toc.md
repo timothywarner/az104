@@ -5,9 +5,9 @@
 - Overview of course objectives and structure.
 - Importance of Azure Administrator skills and certification relevance.
 
-### **Module 1: Manage Azure Identities and Governance (41 minutes)**
+### **Module 1: Manage Azure Identities and Governance (40 minutes)**
 #### Topics:
-- **Manage Azure AD objects:**
+- **Manage Entra AD objects:**
   - Create, modify, and manage users and groups.
   - Manage device identities and access.
 - **Configure and manage Role-Based Access Control (RBAC):**
@@ -18,11 +18,11 @@
   - Apply and manage tags.
   - Manage resource groups and subscriptions.
 
-### **Break (9 minutes)**  
+### **Break (10 minutes)**  
 ---
 
 ## **Hour 2**
-### **Module 2: Implement and Manage Storage (51 minutes)**
+### **Module 2: Implement and Manage Storage (50 minutes)**
 #### Topics:
 - **Secure Azure storage:**
   - Configure storage account access, including shared access signatures (SAS).
@@ -34,11 +34,11 @@
   - Create and configure Azure file shares and Blob Storage.
   - Implement storage tiers and lifecycle management.
 
-### **Break (9 minutes)**  
+### **Break (10 minutes)**  
 ---
 
 ## **Hour 3**
-### **Module 3: Deploy and Manage Azure Compute Resources (51 minutes)**
+### **Module 3: Deploy and Manage Azure Compute Resources (50 minutes)**
 #### Topics:
 - **Automate VM deployment using ARM templates:**
   - Create and deploy Azure Resource Manager templates.
@@ -53,11 +53,11 @@
   - Deploy and manage apps within an App Service plan.
   - Configure custom domains, scaling, and backups.
 
-### **Break (9 minutes)**  
+### **Break (10 minutes)**  
 ---
 
 ## **Hour 4**
-### **Module 4: Configure and Manage Virtual Networking (51 minutes)**
+### **Module 4: Configure and Manage Virtual Networking (50 minutes)**
 #### Topics:
 - **Implement and manage virtual networking:**
   - Create and configure virtual networks and subnets.
@@ -70,11 +70,11 @@
 - **Monitor and troubleshoot virtual networking:**
   - Use Azure Network Watcher and Azure Monitor for troubleshooting.
 
-### **Break (9 minutes)**  
+### **Break (10 minutes)**  
 ---
 
 ## **Hour 5**
-### **Module 4 Continued: Configure and Manage Virtual Networking (41 minutes)**
+### **Module 4 Continued: Configure and Manage Virtual Networking (40 minutes)**
 #### Topics:
 - **Integrate an on-premises network with Azure Virtual Networks:**
   - Implement Azure VPN Gateway and ExpressRoute.
