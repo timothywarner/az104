@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "location": {
+          "type": "string",
+          "defaultValue": "southcentralus",
+          "metadata": {
+              "description": "Location for all resources."
+          }
+      },
+      "bastionName": {
+          "type": "string",
+          "defaultValue": "hub-bastion",
+          "metadata": {
+              "description": "The name of the Bastion resource."
+          }
+      },
+      "vnetName": {
+          "type": "string",
+          "defaultValue": "hub-vnet",
+          "metadata": {
+              "description": "The name of the virtual network."
+          }
+      },
+      "subnetName": {
+          "type": "string",
+          "defaultValue": "AzureBastionSubnet",
+          "metadata": {
+              "description": "The name of the subnet dedicated to Bastion."
+          }
+      }
+  },
+  "variables": {},
+  "resources": [
+      {
+          "type": "Microsoft.Network/bastionHosts",
+          "apiVersion": "2021-02-01",
+          "name": "[parameters('bastionName')]",
+          "location": "[parameters('location')]",
+          "properties": {
+              "ipConfigurations": [
+                  {
+                      "name": "default",
+                      "properties": {
+                          "subnet": {
+                              "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+                          },
+                          "publicIPAddress": {
+                              "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('bastionName'), '-pip'))]"
+                          }
+                      }
+                  }
+              ],
+              "scaleUnits": 2,
+              "disableCopyPaste": false
+          },
+          "sku": {
+              "name": "Standard"
+          }
+      },
+      {
+          "type": "Microsoft.Network/publicIPAddresses",
+          "apiVersion": "2021-02-01",
+          "name": "[concat(parameters('bastionName'), '-pip')]",
+          "location": "[parameters('location')]",
+          "sku": {
+              "name": "Standard"
+          },
+          "properties": {
+              "publicIPAllocationMethod": "Static"
+          }
+      }
+  ],
+  "outputs": {}
+}

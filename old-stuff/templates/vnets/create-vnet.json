@@ -1,0 +1,221 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.451.19169",
+      "templateHash": "11285138547324452462"
+    }
+  },
+  "parameters": {
+    "vnetNamePrefix": {
+      "type": "string",
+      "defaultValue": "hub",
+      "metadata": {
+        "description": "VNet name prefix"
+      }
+    },
+    "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.0.0/16",
+      "metadata": {
+        "description": "VNet address prefix"
+      }
+    },
+    "hubSubnetWebName": {
+      "type": "string",
+      "defaultValue": "web",
+      "metadata": {
+        "description": "web subnet name"
+      }
+    },
+    "hubSubnetWebPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.1.0/24",
+      "metadata": {
+        "description": "web subnet prefix"
+      }
+    },
+    "hubSubnetDataName": {
+      "type": "string",
+      "defaultValue": "data",
+      "metadata": {
+        "description": "hub data subnet name"
+      }
+    },
+    "hubSubnetDataPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.2.0/24",
+      "metadata": {
+        "description": "hub data subnet prefix"
+      }
+    },
+    "gatewaySubnetName": {
+      "type": "string",
+      "defaultValue": "GatewaySubnet",
+      "metadata": {
+        "description": "Gateway subnet name"
+      }
+    },
+    "gatewaySubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.3.0/24",
+      "metadata": {
+        "description": "Gateway subnet prefix"
+      }
+    },
+    "appGatewaySubnetName": {
+      "type": "string",
+      "defaultValue": "ApplicationGatewaySubnet",
+      "metadata": {
+        "description": "Application Gateway subnet name"
+      }
+    },
+    "appGatewaySubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.4.0/24",
+      "metadata": {
+        "description": "Application Gateway subnet prefix"
+      }
+    },
+    "bastionSubnetName": {
+      "type": "string",
+      "defaultValue": "AzureBastionSubnet",
+      "metadata": {
+        "description": "Bastion subnet name"
+      }
+    },
+    "bastionSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.5.0/24",
+      "metadata": {
+        "description": "Bastion subnet prefix"
+      }
+    },
+    "firewallSubnetName": {
+      "type": "string",
+      "defaultValue": "AzureFirewallSubnet",
+      "metadata": {
+        "description": "Firewall user traffic subnet name"
+      }
+    },
+    "firewallSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.6.0/24",
+      "metadata": {
+        "description": "Firewall user traffic subnet prefix"
+      }
+    },
+    "firewallMgmtSubnetName": {
+      "type": "string",
+      "defaultValue": "AzureFirewallManagementSubnet",
+      "metadata": {
+        "description": "Firewall management subnet name"
+      }
+    },
+    "firewallMgmtSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.7.0/24",
+      "metadata": {
+        "description": "Firewall management subnet prefix"
+      }
+    },
+    "routeServerSubnetName": {
+      "type": "string",
+      "defaultValue": "RouteServerSubnet",
+      "metadata": {
+        "description": "Route server subnet name"
+      }
+    },
+    "routeServerSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.60.8.0/24",
+      "metadata": {
+        "description": "Route server subnet prefix"
+      }
+    }
+  },
+  "variables": {
+    "vNetName": "[concat(parameters('vnetNamePrefix'), '-vnet')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2019-11-01",
+      "name": "[variables('vNetName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('hubSubnetWebName')]",
+            "properties": {
+              "addressPrefix": "[parameters('hubSubnetWebPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('hubSubnetDataName')]",
+            "properties": {
+              "addressPrefix": "[parameters('hubSubnetDataPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('gatewaySubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('gatewaySubnetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('appGatewaySubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('appGatewaySubnetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('bastionSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('bastionSubnetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('firewallSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('firewallSubnetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('firewallMgmtSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('firewallMgmtSubnetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('routeServerSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('routeServerSubnetPrefix')]"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+    "vNet": {
+      "type": "object",
+      "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vNetName')))]"
+    },
+    "vNetAddresses": {
+      "type": "array",
+      "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vNetName'))).addressSpace.addressPrefixes]"
+    },
+    "vNetAddressSpace": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vNetName'))).addressSpace.addressPrefixes[0]]"
+    }
+  }
+}

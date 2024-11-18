@@ -1,0 +1,50 @@
+# Setup
+$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
+
+az login
+az configure
+az account list
+az account set --subscription "Microsoft Azure Sponsorship"
+
+# Create a VNet with 2 subnets and 2 NSGs
+let "randomIdentifier=$RANDOM*$RANDOM"
+location="East US"
+resourceGroup="private-rg"
+tag="virtual-network"
+vNet="az104-vnet"
+addressPrefixVNet="10.90.0.0/16"
+subnetFrontEnd="web-subnet"
+subnetPrefixFrontEnd="10.90.1.0/24"
+nsgFrontEnd="web-nsg"
+subnetBackEnd="data-subnet"
+subnetPrefixBackEnd="10.90.2.0/24"
+nsgBackEnd="data-subnet"
+
+# Create a resource group
+echo "Creating $resourceGroup in $location..."
+az group create --name $resourceGroup --location "$location" --tag $tag
+
+# Create a virtual network and a front-end subnet.
+echo "Creating $vNet and $subnetFrontEnd"
+az network vnet create --resource-group $resourceGroup --name $vNet --address-prefix $addressPrefixVNet  --location "$location" --subnet-name $subnetFrontEnd --subnet-prefix $subnetPrefixFrontEnd
+
+# Create a backend subnet.
+echo "Creating $subnetBackEnd"
+az network vnet subnet create --address-prefix $subnetPrefixBackEnd --name $subnetBackEnd --resource-group $resourceGroup --vnet-name $vNet
+
+# Create a network security group (NSG) for the front-end subnet.
+echo "Creating $nsgFrontEnd for $subnetFrontEnd"
+az network nsg create --resource-group $resourceGroup --name $nsgFrontEnd --location "$location"
+
+# Create NSG rules to allow HTTP & HTTPS traffic inbound.
+echo "Creating $nsgFrontEnd rules in $nsgFrontEnd to allow HTTP and HTTPS inbound traffic"
+az network nsg rule create --resource-group $resourceGroup --nsg-name $nsgFrontEnd --name Allow-HTTP-All --access Allow --protocol Tcp --direction Inbound --priority 100 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 80
+az network nsg rule create --resource-group $resourceGroup --nsg-name $nsgFrontEnd --name Allow-HTTPS-All --access Allow --protocol Tcp --direction Inbound --priority 200 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 443
+
+# Create an NSG rule to allow SSH traffic in from the Internet to the front-end subnet.
+echo "Creating NSG rule in $nsgFrontEnd to allow inbound SSH traffic"
+az network nsg rule create --resource-group $resourceGroup --nsg-name $nsgFrontEnd --name Allow-SSH-All --access Allow --protocol Tcp --direction Inbound --priority 300 --source-address-prefix Internet --source-port-range "*" --destination-address-prefix "*" --destination-port-range 22
+
+# Associate the front-end NSG to the front-end subnet.
+echo "Associate $nsgFrontEnd to $subnetFrontEnd"
+az network vnet subnet update --vnet-name $vNet --name $subnetFrontEnd --resource-group $resourceGroup --network-security-group $nsgFrontEnd
