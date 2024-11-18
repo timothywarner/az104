@@ -3,14 +3,33 @@ param location string
 param environmentName string
 param tags object = {}
 
-// Import networking configuration
-var networkingConfig = {
-  addressPrefix: '10.0.0.0/16'
-  subnets: {
-    AzureBastionSubnet: '10.0.1.0/24'    // Required name for Bastion
-    GatewaySubnet: '10.0.2.0/24'         // Required name for VPN Gateway
-    AzureFirewallSubnet: '10.0.3.0/24'   // Required name for Firewall
+// Network configuration
+var networkConfig = {
+  addressSpace: {
+    addressPrefixes: [
+      '10.0.0.0/16'
+    ]
   }
+  subnets: [
+    {
+      name: 'AzureBastionSubnet'
+      properties: {
+        addressPrefix: '10.0.1.0/24'
+      }
+    }
+    {
+      name: 'GatewaySubnet'
+      properties: {
+        addressPrefix: '10.0.2.0/24'
+      }
+    }
+    {
+      name: 'AzureFirewallSubnet'
+      properties: {
+        addressPrefix: '10.0.3.0/24'
+      }
+    }
+  ]
 }
 
 // Create Hub Virtual Network
@@ -19,33 +38,8 @@ resource hubVnet 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   location: location
   tags: tags
   properties: {
-    addressSpace: {
-      addressPrefixes: [
-        networkingConfig.addressPrefix
-      ]
-    }
-    subnets: [
-      {
-        name: 'AzureBastionSubnet'
-        properties: {
-          addressPrefix: networkingConfig.subnets.AzureBastionSubnet
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Disabled'
-        }
-      }
-      {
-        name: 'GatewaySubnet'
-        properties: {
-          addressPrefix: networkingConfig.subnets.GatewaySubnet
-        }
-      }
-      {
-        name: 'AzureFirewallSubnet'
-        properties: {
-          addressPrefix: networkingConfig.subnets.AzureFirewallSubnet
-        }
-      }
-    ]
+    addressSpace: networkConfig.addressSpace
+    subnets: networkConfig.subnets
   }
 }
 

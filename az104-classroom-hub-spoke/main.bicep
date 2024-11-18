@@ -3,8 +3,20 @@ targetScope = 'subscription'
 // Parameters
 @description('Primary location for all resources')
 param location string = 'eastus'
-@description('Environment name')
+@description('Environment name - dev, test, or prod')
+@allowed([
+  'dev'
+  'test'
+  'prod'
+])
 param environmentName string = 'dev'
+
+// Add default tags that will be applied to all resources
+var defaultTags = {
+  environment: environmentName
+  project: 'az104-classroom'
+  deployedBy: 'bicep'
+}
 
 // Resource Group Names
 var hubRgName = 'rg-hub-${environmentName}'
@@ -28,6 +40,7 @@ module hubVnet 'modules/hub-vnet.bicep' = {
   params: {
     location: location
     environmentName: environmentName
+    tags: defaultTags
   }
 }
 
@@ -39,6 +52,7 @@ module spokeVnet 'modules/spoke-vnet.bicep' = {
     location: location
     environmentName: environmentName
     hubVnetId: hubVnet.outputs.vnetId
+    tags: defaultTags
   }
 }
 
@@ -49,6 +63,7 @@ module bastion 'modules/bastion.bicep' = {
   params: {
     location: location
     hubVnetName: hubVnet.outputs.vnetName
+    tags: defaultTags
   }
 }
 
@@ -60,6 +75,7 @@ module virtualMachines 'modules/virtual-machines.bicep' = {
     location: location
     environmentName: environmentName
     subnetId: spokeVnet.outputs.vmSubnetId
+    tags: defaultTags
   }
 }
 
@@ -71,6 +87,7 @@ module appGateway 'modules/app-gateway.bicep' = {
     location: location
     environmentName: environmentName
     subnetId: spokeVnet.outputs.appGwSubnetId
+    tags: defaultTags
   }
 }
 
@@ -81,6 +98,7 @@ module monitoring 'modules/monitoring.bicep' = {
   params: {
     location: location
     environmentName: environmentName
+    tags: defaultTags
   }
 }
 
@@ -90,5 +108,6 @@ module privateDns 'modules/private-dns.bicep' = {
   name: 'privateDnsDeployment'
   params: {
     hubVnetId: hubVnet.outputs.vnetId
+    tags: defaultTags
   }
 }

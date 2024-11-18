@@ -1,12 +1,19 @@
-// Parameters
+@description('Primary location for all resources')
 param location string
+
+@description('Environment name for resource naming')
 param environmentName string
-param hubVnetName string
+
+@description('Resource tags')
 param tags object = {}
+
+// Use variables for resource naming
+var bastionHostName = 'bas-${environmentName}'
+var publicIPName = 'pip-${bastionHostName}'
 
 // Create Public IP for Bastion
 resource bastionPublicIP 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
-  name: 'pip-bastion-${environmentName}'
+  name: publicIPName
   location: location
   tags: tags
   sku: {
@@ -19,7 +26,7 @@ resource bastionPublicIP 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
 
 // Create Bastion Host
 resource bastionHost 'Microsoft.Network/bastionHosts@2023-05-01' = {
-  name: 'bas-${environmentName}'
+  name: bastionHostName
   location: location
   tags: tags
   sku: {

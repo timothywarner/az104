@@ -45,10 +45,15 @@ resource spokeVnet 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   }
 }
 
+// Use variables for peering names
+var hubVnetName = split(hubVnetId, '/')[8]
+var spokePeeringName = 'peering-to-${hubVnetName}'
+var hubPeeringName = 'peering-to-${spokeVnet.name}'
+
 // Create VNet Peering (Spoke to Hub)
 resource spokePeering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2023-05-01' = {
   parent: spokeVnet
-  name: 'peering-to-hub'
+  name: spokePeeringName
   properties: {
     allowVirtualNetworkAccess: true
     allowForwardedTraffic: true
@@ -56,6 +61,21 @@ resource spokePeering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@
     useRemoteGateways: false
     remoteVirtualNetwork: {
       id: hubVnetId
+    }
+  }
+}
+
+// Create VNet Peering (Hub to Spoke)
+resource hubPeering 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2023-05-01' = {
+  parent: hubVnet
+  name: hubPeeringName
+  properties: {
+    allowVirtualNetworkAccess: true
+    allowForwardedTraffic: true
+    allowGatewayTransit: false
+    useRemoteGateways: false
+    remoteVirtualNetwork: {
+      id: spokeVnet.id
     }
   }
 }
