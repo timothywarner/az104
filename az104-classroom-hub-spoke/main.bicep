@@ -1,3 +1,32 @@
+/*
+  Hub-Spoke Network Infrastructure Deployment
+  
+  This template deploys a hub-spoke network topology with the following components:
+  
+  Hub Resources (rg-hub-{env}):
+  - Hub Virtual Network with subnets for Bastion, Gateway, and Firewall
+  - Azure Bastion Service
+  - Monitoring resources
+  - Private DNS Zones
+  
+  Spoke Resources (rg-spoke-{env}):
+  - Spoke Virtual Network peered with Hub
+  - Virtual Machines (Windows & Linux)
+  - Application Gateway
+  - Supporting network infrastructure
+  
+  Usage:
+  1. Customize variables.bicep with your desired values
+  2. Deploy using:
+     az deployment sub create \
+       --location eastus \
+       --template-file main.bicep \
+       --parameters environmentName=dev
+  
+  Reference Architecture:
+  https://learn.microsoft.com/azure/architecture/reference-architectures/hybrid-networking/hub-spoke
+*/
+
 targetScope = 'subscription'
 
 // Parameters
