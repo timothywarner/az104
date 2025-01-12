@@ -1,0 +1,66 @@
+name: 🔍 Check README Links
+
+on:
+  workflow_dispatch:
+    inputs:
+      path:
+        description: 'Path to README file'
+        required: true
+        default: 'README.md'
+
+jobs:
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Setup Lychee
+        uses: lycheeverse/lychee-action@v1.8.0
+        with:
+          args: --verbose --no-progress --exclude-mail --exclude-loopback ${{ github.event.inputs.path }}
+          output: ./lychee.md
+          format: markdown
+          fail: true
+
+      - name: 📝 Create Link Check Report
+        if: always()
+        run: |
+          echo "# 🔗 Link Check Report" > report.md
+          echo "## 📊 Summary" >> report.md
+          echo "Check ran on: $(date)" >> report.md
+          echo "" >> report.md
+          if [ -f ./lychee.md ]; then
+            if [ -s ./lychee.md ]; then
+              echo "### ❌ Found Broken Links" >> report.md
+              cat ./lychee.md >> report.md
+            else
+              echo "### ✅ All Links Are Valid!" >> report.md
+              echo "No broken links found in ${{ github.event.inputs.path }}" >> report.md
+            fi
+          else
+            echo "### ⚠️ No Results" >> report.md
+            echo "The link checker did not generate a report." >> report.md
+          fi
+
+      - name: 📨 Upload Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-check-report
+          path: report.md
+          retention-days: 30
+
+      - name: 💬 Comment on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('report.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });

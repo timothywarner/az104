@@ -1,5 +1,7 @@
 # Tim Warner's AZ-104 Study Resources
 
+<img src="az104-cover-slide.png" alt="AZ-104 Course Cover" width="800"/>
+
 Welcome to the ultimate resource hub for preparing for the **AZ-104 Microsoft Azure Administrator Exam**. Whether you're aiming for certification or deepening your Azure knowledge, this guide is packed with the best tools, links, and tips to set you up for success.
 
 ---
@@ -73,11 +75,11 @@ Learn through hands-on labs and live environments:
 ---
 
 ## 💸 **Exam Discounts and Registration Info**
-- [Microsoft Certification Special Offers](https://www.microsoft.com/en-us/learning/offers.aspx)
-- [AZ-104 Exam Registration](https://docs.microsoft.com/en-us/learn/certifications/exams/az-104)
-- [About Online Exams](https://www.microsoft.com/en-us/learning/online-exams.aspx)
-- [Certification Policies and FAQs](https://www.microsoft.com/en-us/learning/certification-exam-policies.aspx)
-- [Pearson VUE Exam Replay](https://www.mindhub.com/microsoft-exam-replay-mcp-exam-plus-retake/p/Microsoft-Exam-Replay)
+- [Microsoft Certification Special Offers](https://learn.microsoft.com/en-us/certifications/deals)
+- [AZ-104 Exam Registration](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104)
+- [About Online Exams](https://learn.microsoft.com/en-us/credentials/certifications/online-exams)
+- [Certification Policies and FAQs](https://learn.microsoft.com/en-us/credentials/certifications/certification-exam-policies)
+- [Pearson VUE Exam Replay](https://home.pearsonvue.com/microsoft/replay)
 
 ---
 
