@@ -1,0 +1,57 @@
+# Gitleaks configuration for AZ-104 lab environment
+
+title = "AZ-104 Lab Gitleaks Config"
+
+[allowlist]
+description = "Global allowlist"
+paths = [
+    '''class-setup/README.md''',
+    '''class-setup/INSTRUCTOR.md''',
+]
+
+# Azure specific rules
+[[rules]]
+id = "azure-storage-key"
+description = "Azure Storage Key"
+regex = '''(?i)(?:azure|storage).*(?:key|secret|password|token).*[=:]\s*["']?[\w\-=]+["']?'''
+secretGroup = 1
+keywords = [
+    "azure",
+    "storage",
+    "key",
+    "secret"
+]
+
+[[rules]]
+id = "azure-connection-string"
+description = "Azure Connection String"
+regex = '''(?i)(?:DefaultEndpointsProtocol|AccountName|AccountKey|SharedAccessSignature)=[\w\-=;]+'''
+secretGroup = 0
+keywords = [
+    "DefaultEndpointsProtocol",
+    "AccountName",
+    "AccountKey"
+]
+
+[[rules]]
+id = "azure-password"
+description = "Azure Password or Token"
+regex = '''(?i)(?:password|secret|token).*[=:]\s*["']?[\w\-=]+["']?'''
+secretGroup = 1
+keywords = [
+    "password",
+    "secret",
+    "token"
+]
+
+# Additional security for Key Vault references
+[[rules]]
+id = "key-vault-reference"
+description = "Key Vault Secret Reference"
+regex = '''(?i)vault.*(?:secret|key|cert).*[=:]\s*["']?[\w\-=]+["']?'''
+secretGroup = 1
+keywords = [
+    "vault",
+    "secret",
+    "key"
+] 

@@ -1,0 +1,139 @@
+// AZ-104 Lab Environment Monitoring Queries
+// These queries help monitor and troubleshoot various aspects of the lab infrastructure
+
+//--------------------------------------------------------------------------------
+// 1. Network Security Group Flow Logs Analysis
+// Shows denied traffic patterns in the last hour
+AzureNetworkAnalytics_CL
+| where FlowType_s == "MaliciousFlow" or FlowStatus_s == "D"
+| where TimeGenerated > ago(1h)
+| project TimeGenerated, 
+          NSGName_s, 
+          SourceIP_s, 
+          DestinationIP_s, 
+          DestinationPort_d,
+          Protocol_s,
+          FlowStatus_s
+| order by TimeGenerated desc
+
+//--------------------------------------------------------------------------------
+// 2. Application Gateway Performance
+// Monitors request patterns and latency
+AzureDiagnostics
+| where ResourceType == "APPLICATIONGATEWAYS" 
+| where TimeGenerated > ago(1h)
+| summarize 
+    avgLatency=avg(toreal(timeTaken_d)),
+    maxLatency=max(toreal(timeTaken_d)),
+    requestCount=count() 
+    by bin(TimeGenerated, 5m),
+    httpStatus_d
+| order by TimeGenerated desc
+
+//--------------------------------------------------------------------------------
+// 3. VM Performance Metrics
+// Shows CPU and memory usage for all VMs
+Perf
+| where ObjectName == "Processor" and CounterName == "% Processor Time"
+| where TimeGenerated > ago(1h)
+| summarize AvgCPU = avg(CounterValue) by Computer, bin(TimeGenerated, 5m)
+| join kind=inner (
+    Perf
+    | where ObjectName == "Memory" and CounterName == "% Committed Bytes In Use"
+    | where TimeGenerated > ago(1h)
+    | summarize AvgMem = avg(CounterValue) by Computer, bin(TimeGenerated, 5m)
+) on Computer, TimeGenerated
+| project TimeGenerated, Computer, AvgCPU, AvgMem
+| order by TimeGenerated desc
+
+//--------------------------------------------------------------------------------
+// 4. Azure Firewall Analytics
+// Shows blocked traffic patterns
+AzureDiagnostics
+| where ResourceType == "AZUREFIREWALLS"
+| where Category == "AzureFirewallNetworkRule"
+| where TimeGenerated > ago(1h)
+| where action_s == "Deny"
+| project TimeGenerated, 
+          src_ip_s, 
+          dest_ip_s, 
+          dest_port_s,
+          protocol_s
+| order by TimeGenerated desc
+
+//--------------------------------------------------------------------------------
+// 5. VPN Gateway Connectivity Status
+// Monitors VPN connection health
+AzureDiagnostics
+| where ResourceType == "VIRTUALNETWORKGATEWAYS"
+| where Category == "GatewayDiagnosticLog"
+| where TimeGenerated > ago(1h)
+| project TimeGenerated,
+          Message,
+          status_s,
+          remoteIP_s,
+          tunnelType_s
+| order by TimeGenerated desc
+
+//--------------------------------------------------------------------------------
+// 6. Storage Account Operations
+// Tracks storage account access patterns
+StorageBlobLogs
+| where TimeGenerated > ago(1h)
+| summarize count() by 
+    OperationName,
+    StatusText,
+    bin(TimeGenerated, 5m)
+| order by TimeGenerated desc
+
+//--------------------------------------------------------------------------------
+// 7. Container Registry Activity
+// Monitors ACR operations and access
+ContainerRegistryRepositoryEvents
+| where TimeGenerated > ago(1h)
+| project TimeGenerated,
+          Action,
+          Repository,
+          LoginServer,
+          Identity,
+          CallerIpAddress
+| order by TimeGenerated desc
+
+//--------------------------------------------------------------------------------
+// 8. Logic App Execution Analysis
+// Tracks Logic App runs and their status
+AzureDiagnostics
+| where ResourceType == "LOGIC"
+| where Category == "WorkflowRuntime"
+| where TimeGenerated > ago(1h)
+| project TimeGenerated,
+          status_s,
+          workflowName_s,
+          triggerName_s,
+          startTime_t,
+          endTime_t
+| order by TimeGenerated desc
+
+//--------------------------------------------------------------------------------
+// 9. Network Security Group Rule Hits
+// Shows which NSG rules are being triggered
+AzureNetworkAnalytics_CL
+| where TimeGenerated > ago(1h)
+| summarize HitCount=count() by 
+    NSGRule_s,
+    NSGList_s,
+    FlowStatus_s
+| order by HitCount desc
+
+//--------------------------------------------------------------------------------
+// 10. Bastion Usage Analytics
+// Monitors Bastion connection patterns
+AzureDiagnostics
+| where ResourceType == "BASTIONHOSTS"
+| where TimeGenerated > ago(1h)
+| project TimeGenerated,
+          OperationName,
+          Category,
+          Message,
+          TargetVMIPAddress_s
+| order by TimeGenerated desc 

@@ -1,1 +1,60 @@
-~$warner-AZ-104.pptx
+# Azure development
+.env
+.vscode/
+*.pubxml
+*.publishsettings
+node_modules/
+bower_components/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.idea/
+
+# Credentials and secrets
+*.pfx
+*.key
+*.pem
+*.crt
+*.csr
+*.der
+*.priv
+*.passwords
+*connection*.config
+*secrets*.json
+*credentials*.json
+*azureauth*.json
+.azure/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Local development
+*.local
+local.settings.json
+appsettings.*.json
+!appsettings.json
+!appsettings.Example.json
+
+# Bicep
+*.bicepparam
+
+# PowerShell
+*.psd1
+*.psm1
+*.ps1.config

@@ -1,0 +1,109 @@
+{
+    "storageConfigs": {
+        "generalPurpose": {
+            "name": "az104labstorage",
+            "properties": {
+                "accessTier": "Hot",
+                "allowBlobPublicAccess": false,
+                "allowCrossTenantReplication": false,
+                "allowSharedKeyAccess": true,
+                "encryption": {
+                    "keySource": "Microsoft.Storage",
+                    "requireInfrastructureEncryption": true,
+                    "services": {
+                        "blob": { "enabled": true },
+                        "file": { "enabled": true },
+                        "queue": { "enabled": true },
+                        "table": { "enabled": true }
+                    }
+                },
+                "minimumTlsVersion": "TLS1_2",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Deny",
+                    "virtualNetworkRules": [
+                        {
+                            "action": "Allow",
+                            "id": "${spoke_subnet_id}"
+                        }
+                    ],
+                    "ipRules": [
+                        {
+                            "action": "Allow",
+                            "value": "40.50.60.70"
+                        }
+                    ]
+                },
+                "supportsHttpsTrafficOnly": true
+            },
+            "sku": {
+                "name": "Standard_GRS"
+            }
+        },
+        "fileShare": {
+            "name": "az104lab-fileshare",
+            "properties": {
+                "enabledProtocols": "SMB",
+                "shareQuota": 5120,
+                "accessTier": "TransactionOptimized",
+                "metadata": {
+                    "department": "IT",
+                    "environment": "Training"
+                }
+            },
+            "backup": {
+                "enabled": true,
+                "policyName": "DailyPolicy",
+                "schedule": {
+                    "scheduleRunTimes": ["2024-01-01T02:00:00Z"],
+                    "scheduleRunDays": ["Monday", "Wednesday", "Friday"]
+                },
+                "retentionPolicy": {
+                    "dailySchedule": {
+                        "retentionDuration": {
+                            "count": 30,
+                            "durationType": "Days"
+                        }
+                    }
+                }
+            }
+        },
+        "blobContainer": {
+            "name": "az104lab-container",
+            "properties": {
+                "publicAccess": "None",
+                "metadata": {
+                    "department": "IT",
+                    "environment": "Training"
+                },
+                "defaultEncryptionScope": "$account-encryption-key",
+                "denyEncryptionScopeOverride": true
+            },
+            "lifecycleManagement": {
+                "rules": [
+                    {
+                        "name": "MoveToCool",
+                        "enabled": true,
+                        "type": "Lifecycle",
+                        "definition": {
+                            "filters": {
+                                "blobTypes": ["blockBlob"],
+                                "prefixMatch": ["backups/"]
+                            },
+                            "actions": {
+                                "baseBlob": {
+                                    "tierToCool": { "daysAfterModificationGreaterThan": 30 },
+                                    "tierToArchive": { "daysAfterModificationGreaterThan": 90 },
+                                    "delete": { "daysAfterModificationGreaterThan": 365 }
+                                },
+                                "snapshot": {
+                                    "delete": { "daysAfterCreationGreaterThan": 30 }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+} 

@@ -1,0 +1,112 @@
+{
+    "networkSecurityGroups": {
+        "hubNSG": {
+            "name": "az104lab-hub-nsg",
+            "securityRules": [
+                {
+                    "name": "AllowRDPInbound",
+                    "properties": {
+                        "description": "Allow RDP from Azure Bastion subnet",
+                        "protocol": "Tcp",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "3389",
+                        "sourceAddressPrefix": "10.0.1.0/24",
+                        "destinationAddressPrefix": "VirtualNetwork",
+                        "access": "Allow",
+                        "priority": 100,
+                        "direction": "Inbound"
+                    }
+                },
+                {
+                    "name": "AllowSSHInbound",
+                    "properties": {
+                        "description": "Allow SSH from Azure Bastion subnet",
+                        "protocol": "Tcp",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "22",
+                        "sourceAddressPrefix": "10.0.1.0/24",
+                        "destinationAddressPrefix": "VirtualNetwork",
+                        "access": "Allow",
+                        "priority": 110,
+                        "direction": "Inbound"
+                    }
+                },
+                {
+                    "name": "AllowHTTPSInbound",
+                    "properties": {
+                        "description": "Allow HTTPS inbound for App Gateway",
+                        "protocol": "Tcp",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "443",
+                        "sourceAddressPrefix": "Internet",
+                        "destinationAddressPrefix": "10.0.2.0/24",
+                        "access": "Allow",
+                        "priority": 120,
+                        "direction": "Inbound"
+                    }
+                },
+                {
+                    "name": "DenyAllInbound",
+                    "properties": {
+                        "description": "Deny all other inbound traffic",
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Deny",
+                        "priority": 4096,
+                        "direction": "Inbound"
+                    }
+                }
+            ]
+        },
+        "spokeNSG": {
+            "name": "az104lab-spoke-nsg",
+            "securityRules": [
+                {
+                    "name": "AllowVnetInbound",
+                    "properties": {
+                        "description": "Allow all traffic from connected virtual networks",
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "VirtualNetwork",
+                        "destinationAddressPrefix": "VirtualNetwork",
+                        "access": "Allow",
+                        "priority": 100,
+                        "direction": "Inbound"
+                    }
+                },
+                {
+                    "name": "AllowAzureLoadBalancer",
+                    "properties": {
+                        "description": "Allow Azure Load Balancer inbound traffic",
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "AzureLoadBalancer",
+                        "destinationAddressPrefix": "*",
+                        "access": "Allow",
+                        "priority": 110,
+                        "direction": "Inbound"
+                    }
+                },
+                {
+                    "name": "DenyAllInbound",
+                    "properties": {
+                        "description": "Deny all other inbound traffic",
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "*",
+                        "sourceAddressPrefix": "*",
+                        "destinationAddressPrefix": "*",
+                        "access": "Deny",
+                        "priority": 4096,
+                        "direction": "Inbound"
+                    }
+                }
+            ]
+        }
+    }
+} 

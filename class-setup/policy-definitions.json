@@ -1,0 +1,348 @@
+{
+    "policies": [
+        {
+            "name": "Inherit Resource Group Tags",
+            "description": "Automatically copies all tags from the resource group to its resources during creation or update",
+            "definition": {
+                "mode": "Indexed",
+                "parameters": {
+                    "tagNames": {
+                        "type": "Array",
+                        "metadata": {
+                            "displayName": "Tag Names",
+                            "description": "Names of tags to inherit (e.g., ['environment', 'costCenter'])"
+                        }
+                    }
+                },
+                "policyRule": {
+                    "if": {
+                        "allOf": [
+                            {
+                                "field": "tags",
+                                "exists": "false"
+                            }
+                        ]
+                    },
+                    "then": {
+                        "effect": "modify",
+                        "details": {
+                            "roleDefinitionIds": [
+                                "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                            ],
+                            "operations": [
+                                {
+                                    "operation": "add",
+                                    "field": "tags",
+                                    "value": "[resourceGroup().tags]"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Restrict Allowed Locations",
+            "description": "Limits resource deployment to specific Azure regions for compliance and cost optimization",
+            "definition": {
+                "mode": "All",
+                "parameters": {
+                    "allowedLocations": {
+                        "type": "Array",
+                        "metadata": {
+                            "displayName": "Allowed Locations",
+                            "description": "List of allowed Azure regions",
+                            "strongType": "location"
+                        }
+                    }
+                },
+                "policyRule": {
+                    "if": {
+                        "not": {
+                            "field": "location",
+                            "in": "[parameters('allowedLocations')]"
+                        }
+                    },
+                    "then": {
+                        "effect": "deny"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Restrict VM SKUs",
+            "description": "Ensures cost control by limiting VM sizes to specific SKUs",
+            "definition": {
+                "mode": "All",
+                "parameters": {
+                    "allowedSKUs": {
+                        "type": "Array",
+                        "metadata": {
+                            "displayName": "Allowed VM SKUs",
+                            "description": "List of allowed VM sizes (e.g., ['Standard_B1s', 'Standard_B2s'])"
+                        }
+                    }
+                },
+                "policyRule": {
+                    "if": {
+                        "allOf": [
+                            {
+                                "field": "type",
+                                "equals": "Microsoft.Compute/virtualMachines"
+                            },
+                            {
+                                "not": {
+                                    "field": "Microsoft.Compute/virtualMachines/sku.name",
+                                    "in": "[parameters('allowedSKUs')]"
+                                }
+                            }
+                        ]
+                    },
+                    "then": {
+                        "effect": "deny"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Require Network Watcher",
+            "description": "Ensures Network Watcher is enabled in regions where virtual networks exist",
+            "definition": {
+                "mode": "All",
+                "policyRule": {
+                    "if": {
+                        "allOf": [
+                            {
+                                "field": "type",
+                                "equals": "Microsoft.Network/virtualNetworks"
+                            },
+                            {
+                                "field": "location",
+                                "exists": "true"
+                            }
+                        ]
+                    },
+                    "then": {
+                        "effect": "deployIfNotExists",
+                        "details": {
+                            "type": "Microsoft.Network/networkWatchers",
+                            "roleDefinitionIds": [
+                                "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                            ],
+                            "existenceCondition": {
+                                "allOf": [
+                                    {
+                                        "field": "type",
+                                        "equals": "Microsoft.Network/networkWatchers"
+                                    },
+                                    {
+                                        "field": "location",
+                                        "equals": "[field('location')]"
+                                    }
+                                ]
+                            },
+                            "deployment": {
+                                "properties": {
+                                    "mode": "incremental",
+                                    "template": {
+                                        "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                        "contentVersion": "1.0.0.0",
+                                        "parameters": {
+                                            "location": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "resources": [
+                                            {
+                                                "type": "Microsoft.Network/networkWatchers",
+                                                "apiVersion": "2021-02-01",
+                                                "name": "[concat('NetworkWatcher_', parameters('location'))]",
+                                                "location": "[parameters('location')]"
+                                            }
+                                        ]
+                                    },
+                                    "parameters": {
+                                        "location": {
+                                            "value": "[field('location')]"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Require Diagnostic Settings",
+            "description": "Ensures diagnostic settings are configured for resources to send logs to Log Analytics",
+            "definition": {
+                "mode": "All",
+                "parameters": {
+                    "logAnalytics": {
+                        "type": "String",
+                        "metadata": {
+                            "displayName": "Log Analytics Workspace",
+                            "description": "Resource ID of the Log Analytics workspace"
+                        }
+                    }
+                },
+                "policyRule": {
+                    "if": {
+                        "field": "type",
+                        "in": [
+                            "Microsoft.Network/networkSecurityGroups",
+                            "Microsoft.Network/applicationGateways",
+                            "Microsoft.Network/azureFirewalls"
+                        ]
+                    },
+                    "then": {
+                        "effect": "deployIfNotExists",
+                        "details": {
+                            "type": "Microsoft.Insights/diagnosticSettings",
+                            "roleDefinitionIds": [
+                                "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                            ],
+                            "existenceCondition": {
+                                "allOf": [
+                                    {
+                                        "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+                                        "equals": "true"
+                                    },
+                                    {
+                                        "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+                                        "equals": "[parameters('logAnalytics')]"
+                                    }
+                                ]
+                            },
+                            "deployment": {
+                                "properties": {
+                                    "mode": "incremental",
+                                    "template": {
+                                        "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                        "contentVersion": "1.0.0.0",
+                                        "parameters": {
+                                            "resourceName": {
+                                                "type": "string"
+                                            },
+                                            "logAnalytics": {
+                                                "type": "string"
+                                            },
+                                            "location": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "resources": [
+                                            {
+                                                "type": "Microsoft.Insights/diagnosticSettings",
+                                                "apiVersion": "2021-05-01-preview",
+                                                "name": "setByPolicy",
+                                                "location": "[parameters('location')]",
+                                                "dependsOn": [],
+                                                "properties": {
+                                                    "workspaceId": "[parameters('logAnalytics')]",
+                                                    "logs": [
+                                                        {
+                                                            "category": "AllLogs",
+                                                            "enabled": true
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "parameters": {
+                                        "logAnalytics": {
+                                            "value": "[parameters('logAnalytics')]"
+                                        },
+                                        "resourceName": {
+                                            "value": "[field('name')]"
+                                        },
+                                        "location": {
+                                            "value": "[field('location')]"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Require Backup for VMs",
+            "description": "Ensures Azure Backup is enabled for all virtual machines",
+            "definition": {
+                "mode": "All",
+                "parameters": {
+                    "backupPolicyId": {
+                        "type": "String",
+                        "metadata": {
+                            "displayName": "Backup Policy ID",
+                            "description": "Resource ID of the backup policy to apply"
+                        }
+                    }
+                },
+                "policyRule": {
+                    "if": {
+                        "allOf": [
+                            {
+                                "field": "type",
+                                "equals": "Microsoft.Compute/virtualMachines"
+                            }
+                        ]
+                    },
+                    "then": {
+                        "effect": "deployIfNotExists",
+                        "details": {
+                            "type": "Microsoft.RecoveryServices/backupprotecteditems",
+                            "roleDefinitionIds": [
+                                "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                            ],
+                            "existenceCondition": {
+                                "field": "name",
+                                "like": "*"
+                            },
+                            "deployment": {
+                                "properties": {
+                                    "mode": "incremental",
+                                    "template": {
+                                        "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                        "contentVersion": "1.0.0.0",
+                                        "parameters": {
+                                            "vmName": {
+                                                "type": "string"
+                                            },
+                                            "backupPolicyId": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "resources": [
+                                            {
+                                                "name": "[concat(parameters('vmName'), '-backup')]",
+                                                "type": "Microsoft.RecoveryServices/backupprotecteditems",
+                                                "apiVersion": "2021-01-01",
+                                                "properties": {
+                                                    "policyId": "[parameters('backupPolicyId')]",
+                                                    "sourceResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "parameters": {
+                                        "vmName": {
+                                            "value": "[field('name')]"
+                                        },
+                                        "backupPolicyId": {
+                                            "value": "[parameters('backupPolicyId')]"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+} 

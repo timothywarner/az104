@@ -1,0 +1,197 @@
+{
+    "azureFirewall": {
+        "name": "az104lab-firewall",
+        "ruleCollections": {
+            "applicationRuleCollections": [
+                {
+                    "name": "AllowWebAccess",
+                    "priority": 100,
+                    "action": {
+                        "type": "Allow"
+                    },
+                    "rules": [
+                        {
+                            "name": "AllowMicrosoftUpdates",
+                            "sourceAddresses": [
+                                "10.0.0.0/16",
+                                "10.1.0.0/16"
+                            ],
+                            "protocols": [
+                                {
+                                    "protocolType": "Https",
+                                    "port": 443
+                                },
+                                {
+                                    "protocolType": "Http",
+                                    "port": 80
+                                }
+                            ],
+                            "targetFqdns": [
+                                "*.microsoft.com",
+                                "*.windowsupdate.com"
+                            ]
+                        },
+                        {
+                            "name": "AllowAzurePortal",
+                            "sourceAddresses": [
+                                "10.0.0.0/16",
+                                "10.1.0.0/16"
+                            ],
+                            "protocols": [
+                                {
+                                    "protocolType": "Https",
+                                    "port": 443
+                                }
+                            ],
+                            "targetFqdns": [
+                                "*.azure.com",
+                                "*.microsoft.com"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "DenyMaliciousDomains",
+                    "priority": 200,
+                    "action": {
+                        "type": "Deny"
+                    },
+                    "rules": [
+                        {
+                            "name": "BlockKnownMalicious",
+                            "sourceAddresses": [
+                                "*"
+                            ],
+                            "protocols": [
+                                {
+                                    "protocolType": "Http",
+                                    "port": 80
+                                },
+                                {
+                                    "protocolType": "Https",
+                                    "port": 443
+                                }
+                            ],
+                            "targetFqdns": [
+                                "*.malicious.com",
+                                "*.suspicious.net"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "networkRuleCollections": [
+                {
+                    "name": "AllowBasicProtocols",
+                    "priority": 100,
+                    "action": {
+                        "type": "Allow"
+                    },
+                    "rules": [
+                        {
+                            "name": "AllowDNS",
+                            "protocols": [
+                                "UDP"
+                            ],
+                            "sourceAddresses": [
+                                "10.0.0.0/16",
+                                "10.1.0.0/16"
+                            ],
+                            "destinationAddresses": [
+                                "168.63.129.16",
+                                "1.1.1.1"
+                            ],
+                            "destinationPorts": [
+                                "53"
+                            ]
+                        },
+                        {
+                            "name": "AllowNTP",
+                            "protocols": [
+                                "UDP"
+                            ],
+                            "sourceAddresses": [
+                                "10.0.0.0/16",
+                                "10.1.0.0/16"
+                            ],
+                            "destinationAddresses": [
+                                "*"
+                            ],
+                            "destinationPorts": [
+                                "123"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "AllowAppServices",
+                    "priority": 200,
+                    "action": {
+                        "type": "Allow"
+                    },
+                    "rules": [
+                        {
+                            "name": "AllowSQL",
+                            "protocols": [
+                                "TCP"
+                            ],
+                            "sourceAddresses": [
+                                "10.1.0.0/16"
+                            ],
+                            "destinationAddresses": [
+                                "10.0.0.0/16"
+                            ],
+                            "destinationPorts": [
+                                "1433"
+                            ]
+                        },
+                        {
+                            "name": "AllowRDP",
+                            "protocols": [
+                                "TCP"
+                            ],
+                            "sourceAddresses": [
+                                "10.0.1.0/24"
+                            ],
+                            "destinationAddresses": [
+                                "10.0.0.0/16",
+                                "10.1.0.0/16"
+                            ],
+                            "destinationPorts": [
+                                "3389"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "natRuleCollections": [
+                {
+                    "name": "InboundNAT",
+                    "priority": 100,
+                    "action": {
+                        "type": "Dnat"
+                    },
+                    "rules": [
+                        {
+                            "name": "WebServerNAT",
+                            "protocols": [
+                                "TCP"
+                            ],
+                            "sourceAddresses": [
+                                "*"
+                            ],
+                            "destinationAddresses": [
+                                "${firewall-pip}"
+                            ],
+                            "destinationPorts": [
+                                "80"
+                            ],
+                            "translatedAddress": "10.0.2.4",
+                            "translatedPort": "80"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+} 

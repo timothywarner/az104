@@ -1,0 +1,160 @@
+{
+    "wafPolicies": {
+        "applicationGateway": {
+            "name": "az104lab-waf-policy-appgw",
+            "properties": {
+                "policySettings": {
+                    "state": "Enabled",
+                    "mode": "Prevention",
+                    "maxRequestBodySizeInKb": 128,
+                    "fileUploadLimitInMb": 100,
+                    "requestBodyCheck": true
+                },
+                "customRules": [
+                    {
+                        "name": "BlockCountriesRule",
+                        "priority": 1,
+                        "ruleType": "MatchRule",
+                        "action": "Block",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RemoteAddr"
+                                    }
+                                ],
+                                "operator": "GeoMatch",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "North Korea",
+                                    "Iran",
+                                    "Sudan"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "BlockIPRangeRule",
+                        "priority": 2,
+                        "ruleType": "MatchRule",
+                        "action": "Block",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RemoteAddr"
+                                    }
+                                ],
+                                "operator": "IPMatch",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "192.168.1.0/24",
+                                    "10.0.0.0/24"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "managedRules": {
+                    "managedRuleSets": [
+                        {
+                            "ruleSetType": "OWASP",
+                            "ruleSetVersion": "3.2",
+                            "ruleGroupOverrides": [
+                                {
+                                    "ruleGroupName": "REQUEST-920-PROTOCOL-ENFORCEMENT",
+                                    "rules": [
+                                        {
+                                            "ruleId": "920300",
+                                            "state": "Disabled",
+                                            "action": "Block"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "frontDoor": {
+            "name": "az104lab-waf-policy-frontdoor",
+            "properties": {
+                "policySettings": {
+                    "enabledState": "Enabled",
+                    "mode": "Prevention"
+                },
+                "customRules": {
+                    "rules": [
+                        {
+                            "name": "BlockBadBots",
+                            "priority": 1,
+                            "enabledState": "Enabled",
+                            "ruleType": "MatchRule",
+                            "action": "Block",
+                            "matchConditions": [
+                                {
+                                    "matchVariable": "RequestHeader",
+                                    "selector": "User-Agent",
+                                    "operator": "Contains",
+                                    "negateCondition": false,
+                                    "matchValue": [
+                                        "bad-bot",
+                                        "scraper",
+                                        "crawler"
+                                    ],
+                                    "transforms": [
+                                        "Lowercase"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "RateLimitRule",
+                            "priority": 2,
+                            "enabledState": "Enabled",
+                            "ruleType": "RateLimitRule",
+                            "action": "Block",
+                            "matchConditions": [
+                                {
+                                    "matchVariable": "RemoteAddr",
+                                    "operator": "IPMatch",
+                                    "negateCondition": false,
+                                    "matchValue": [
+                                        "0.0.0.0/0"
+                                    ]
+                                }
+                            ],
+                            "rateLimitDurationInMinutes": 1,
+                            "rateLimitThreshold": 100
+                        }
+                    ]
+                },
+                "managedRules": {
+                    "managedRuleSets": [
+                        {
+                            "ruleSetType": "DefaultRuleSet",
+                            "ruleSetVersion": "1.0",
+                            "ruleGroupOverrides": [
+                                {
+                                    "ruleGroupName": "PHP",
+                                    "rules": [
+                                        {
+                                            "ruleId": "PHP100",
+                                            "action": "Block",
+                                            "enabledState": "Enabled"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "ruleSetType": "BotProtection",
+                            "ruleSetVersion": "1.0"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+} 

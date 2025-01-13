@@ -1,0 +1,230 @@
+{
+    "monitoringConfigs": {
+        "logAnalytics": {
+            "name": "az104lab-law",
+            "properties": {
+                "sku": {
+                    "name": "PerGB2018"
+                },
+                "retentionInDays": 30,
+                "features": {
+                    "enableLogAccessUsingOnlyResourcePermissions": true
+                },
+                "workspaceCapping": {
+                    "dailyQuotaGb": 1
+                },
+                "publicNetworkAccessForIngestion": "Enabled",
+                "publicNetworkAccessForQuery": "Enabled"
+            },
+            "solutions": [
+                {
+                    "name": "VMInsights",
+                    "product": "OMSGallery/VMInsights",
+                    "publisher": "Microsoft"
+                },
+                {
+                    "name": "ContainerInsights",
+                    "product": "OMSGallery/ContainerInsights",
+                    "publisher": "Microsoft"
+                },
+                {
+                    "name": "NetworkMonitoring",
+                    "product": "OMSGallery/NetworkMonitoring",
+                    "publisher": "Microsoft"
+                }
+            ]
+        },
+        "diagnosticSettings": {
+            "name": "az104lab-diag",
+            "properties": {
+                "workspaceId": "${law_resource_id}",
+                "metrics": [
+                    {
+                        "category": "AllMetrics",
+                        "enabled": true,
+                        "retentionPolicy": {
+                            "days": 30,
+                            "enabled": true
+                        }
+                    }
+                ],
+                "logs": [
+                    {
+                        "category": "Administrative",
+                        "enabled": true
+                    },
+                    {
+                        "category": "Security",
+                        "enabled": true
+                    },
+                    {
+                        "category": "ServiceHealth",
+                        "enabled": true
+                    },
+                    {
+                        "category": "Alert",
+                        "enabled": true
+                    },
+                    {
+                        "category": "Recommendation",
+                        "enabled": true
+                    },
+                    {
+                        "category": "Policy",
+                        "enabled": true
+                    },
+                    {
+                        "category": "Autoscale",
+                        "enabled": true
+                    },
+                    {
+                        "category": "ResourceHealth",
+                        "enabled": true
+                    }
+                ]
+            }
+        },
+        "alertRules": {
+            "cpuAlert": {
+                "name": "HighCPUAlert",
+                "properties": {
+                    "description": "Alert when CPU exceeds 80%",
+                    "severity": 2,
+                    "enabled": true,
+                    "scopes": ["${vm_resource_id}"],
+                    "evaluationFrequency": "PT5M",
+                    "windowSize": "PT15M",
+                    "criteria": {
+                        "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
+                        "allOf": [
+                            {
+                                "name": "HighCPU",
+                                "metricNamespace": "Microsoft.Compute/virtualMachines",
+                                "metricName": "Percentage CPU",
+                                "operator": "GreaterThan",
+                                "threshold": 80,
+                                "timeAggregation": "Average",
+                                "criterionType": "StaticThresholdCriterion"
+                            }
+                        ]
+                    },
+                    "actions": [
+                        {
+                            "actionGroupId": "${action_group_id}"
+                        }
+                    ]
+                }
+            },
+            "networkAlert": {
+                "name": "NetworkLatencyAlert",
+                "properties": {
+                    "description": "Alert when network latency exceeds threshold",
+                    "severity": 2,
+                    "enabled": true,
+                    "scopes": ["${vnet_resource_id}"],
+                    "evaluationFrequency": "PT5M",
+                    "windowSize": "PT15M",
+                    "criteria": {
+                        "odata.type": "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
+                        "allOf": [
+                            {
+                                "name": "HighLatency",
+                                "metricNamespace": "Microsoft.Network/virtualNetworks",
+                                "metricName": "AverageLatency",
+                                "operator": "GreaterThan",
+                                "threshold": 100,
+                                "timeAggregation": "Average",
+                                "criterionType": "StaticThresholdCriterion"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "actionGroups": {
+            "name": "az104lab-actiongroup",
+            "properties": {
+                "groupShortName": "az104alerts",
+                "enabled": true,
+                "emailReceivers": [
+                    {
+                        "name": "EmailAdmin",
+                        "emailAddress": "admin@contoso.com",
+                        "useCommonAlertSchema": true
+                    }
+                ],
+                "smsReceivers": [
+                    {
+                        "name": "SMSAdmin",
+                        "countryCode": "1",
+                        "phoneNumber": "2065555555"
+                    }
+                ],
+                "webhookReceivers": [
+                    {
+                        "name": "WebhookAlert",
+                        "serviceUri": "https://webhook.contoso.com/alert",
+                        "useCommonAlertSchema": true
+                    }
+                ]
+            }
+        },
+        "networkWatcher": {
+            "name": "az104lab-networkwatcher",
+            "flowLogs": {
+                "name": "az104lab-flowlogs",
+                "properties": {
+                    "targetResourceId": "${nsg_id}",
+                    "storageId": "${storage_account_id}",
+                    "enabled": true,
+                    "retentionPolicy": {
+                        "days": 30,
+                        "enabled": true
+                    },
+                    "format": {
+                        "type": "JSON",
+                        "version": 2
+                    }
+                }
+            },
+            "connectionMonitor": {
+                "name": "az104lab-connmonitor",
+                "properties": {
+                    "endpoints": [
+                        {
+                            "name": "Source",
+                            "resourceId": "${source_vm_id}",
+                            "type": "AzureVM"
+                        },
+                        {
+                            "name": "Destination",
+                            "resourceId": "${dest_vm_id}",
+                            "type": "AzureVM"
+                        }
+                    ],
+                    "testConfigurations": [
+                        {
+                            "name": "HttpTest",
+                            "testFrequencySec": 30,
+                            "protocol": "Http",
+                            "httpConfiguration": {
+                                "port": 80,
+                                "method": "Get",
+                                "requestHeaders": [],
+                                "validStatusCodeRanges": ["200-299"]
+                            }
+                        }
+                    ],
+                    "testGroups": [
+                        {
+                            "name": "DefaultTestGroup",
+                            "sources": ["Source"],
+                            "destinations": ["Destination"],
+                            "testConfigurations": ["HttpTest"]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+} 

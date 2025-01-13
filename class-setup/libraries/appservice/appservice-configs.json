@@ -1,0 +1,150 @@
+{
+    "appServiceConfigs": {
+        "appServicePlan": {
+            "name": "az104lab-plan",
+            "properties": {
+                "reserved": false,
+                "zoneRedundant": true,
+                "targetWorkerCount": 2,
+                "targetWorkerSizeId": 1,
+                "elasticScaleEnabled": true
+            },
+            "sku": {
+                "name": "P1v2",
+                "tier": "PremiumV2",
+                "size": "P1v2",
+                "family": "Pv2",
+                "capacity": 1
+            },
+            "autoScaleSettings": {
+                "name": "AutoscaleProfile",
+                "properties": {
+                    "enabled": true,
+                    "targetResourceUri": "${app_service_plan_id}",
+                    "profiles": [
+                        {
+                            "name": "Default",
+                            "capacity": {
+                                "minimum": "1",
+                                "maximum": "3",
+                                "default": "1"
+                            },
+                            "rules": [
+                                {
+                                    "metricTrigger": {
+                                        "metricName": "CpuPercentage",
+                                        "metricResourceUri": "${app_service_plan_id}",
+                                        "timeGrain": "PT1M",
+                                        "statistic": "Average",
+                                        "timeWindow": "PT10M",
+                                        "timeAggregation": "Average",
+                                        "operator": "GreaterThan",
+                                        "threshold": 70
+                                    },
+                                    "scaleAction": {
+                                        "direction": "Increase",
+                                        "type": "ChangeCount",
+                                        "value": "1",
+                                        "cooldown": "PT10M"
+                                    }
+                                },
+                                {
+                                    "metricTrigger": {
+                                        "metricName": "CpuPercentage",
+                                        "metricResourceUri": "${app_service_plan_id}",
+                                        "timeGrain": "PT1M",
+                                        "statistic": "Average",
+                                        "timeWindow": "PT10M",
+                                        "timeAggregation": "Average",
+                                        "operator": "LessThan",
+                                        "threshold": 30
+                                    },
+                                    "scaleAction": {
+                                        "direction": "Decrease",
+                                        "type": "ChangeCount",
+                                        "value": "1",
+                                        "cooldown": "PT10M"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "webApp": {
+            "name": "az104lab-webapp",
+            "properties": {
+                "serverFarmId": "${app_service_plan_id}",
+                "siteConfig": {
+                    "alwaysOn": true,
+                    "http20Enabled": true,
+                    "minTlsVersion": "1.2",
+                    "ftpsState": "FtpsOnly",
+                    "netFrameworkVersion": "v6.0",
+                    "phpVersion": "OFF",
+                    "pythonVersion": "OFF",
+                    "nodeVersion": "OFF",
+                    "requestTracingEnabled": true,
+                    "detailedErrorLoggingEnabled": true,
+                    "httpLoggingEnabled": true,
+                    "logsDirectorySizeLimit": 35,
+                    "ipSecurityRestrictions": [
+                        {
+                            "ipAddress": "10.0.0.0/16",
+                            "action": "Allow",
+                            "priority": 100,
+                            "name": "Allow_VNet"
+                        }
+                    ]
+                },
+                "clientCertEnabled": true,
+                "httpsOnly": true,
+                "virtualNetworkSubnetId": "${subnet_id}",
+                "publicNetworkAccess": "Enabled"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "deploymentSlots": [
+                {
+                    "name": "staging",
+                    "properties": {
+                        "enabled": true,
+                        "targetSwapSlot": "production"
+                    }
+                },
+                {
+                    "name": "testing",
+                    "properties": {
+                        "enabled": true
+                    }
+                }
+            ],
+            "backup": {
+                "name": "WebAppBackup",
+                "properties": {
+                    "enabled": true,
+                    "storageAccountUrl": "${storage_sas_url}",
+                    "backupSchedule": {
+                        "frequencyInterval": 1,
+                        "frequencyUnit": "Day",
+                        "keepAtLeastOneBackup": true,
+                        "retentionPeriodInDays": 30,
+                        "startTime": "2024-01-01T01:00:00Z"
+                    }
+                }
+            },
+            "customDomains": [
+                {
+                    "name": "www.contoso.com",
+                    "properties": {
+                        "hostNameType": "Verified",
+                        "sslState": "SniEnabled",
+                        "thumbprint": "${cert_thumbprint}"
+                    }
+                }
+            ]
+        }
+    }
+} 
