@@ -40,7 +40,7 @@ These resources build your understanding of Azure fundamentals and exam concepts
 
 ---
 
-*## 🛠 **Your Toolkit**
+## 🛠 **Your Toolkit**
 Essential tools to follow along and practice efficiently:
 - **[Visual Studio Code](https://code.visualstudio.com/)**  
   Recommended extensions:
@@ -52,8 +52,8 @@ Essential tools to follow along and practice efficiently:
 - [PowerShell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell)
 - [Azure PowerShell Module](https://learn.microsoft.com/en-us/powershell/azure/install-az-ps)
 - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-- [Azure Storage Explorer](https://learn.microsoft.com/en-us/azure/vs-azure-tools-storage-explorer)
-- [AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)*
+- [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/)
+- [AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)
 
 ---
 
@@ -63,8 +63,8 @@ Learn through hands-on labs and live environments:
 - [Microsoft Learn: Azure Administrator Path](https://docs.microsoft.com/en-us/learn/browse/?roles=administrator)
 - [Azure Citadel](https://azurecitadel.com/)
 - [AZ-104 Microsoft Official Curriculum Labs](https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator)
-- [Azure Bicep Playground](https://bicepdemo.z22.web.core.windows.net/)
-- [Azure Log Analytics Playground](https://portal.azure.com/#blade/Microsoft_Azure_Monitoring_Logs/DemoLogsBlade)
+- [Azure Bicep Playground](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/playground)
+- [Azure Log Analytics Demo Environment](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-demo-environment)
 
 ---
 
@@ -79,7 +79,7 @@ Learn through hands-on labs and live environments:
 - [AZ-104 Exam Registration](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104)
 - [About Online Exams](https://learn.microsoft.com/en-us/credentials/certifications/online-exams)
 - [Certification Policies and FAQs](https://learn.microsoft.com/en-us/credentials/certifications/certification-exam-policies)
-- [Pearson VUE Exam Replay](https://home.pearsonvue.com/microsoft/replay)
+- [Microsoft Certification Exam Policies](https://learn.microsoft.com/en-us/certifications/certification-exam-policies)
 
 ---
 
