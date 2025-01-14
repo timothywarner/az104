@@ -6,6 +6,18 @@
 node_modules/
 bower_components/
 
+# IDE Settings
+.vscode/
+.idea/
+*.code-workspace
+settings.json
+.settings/
+*.sublime-workspace
+*.sublime-project
+.vs/
+*.swp
+*.swo
+
 # User-specific files
 *.rsuser
 *.suo
